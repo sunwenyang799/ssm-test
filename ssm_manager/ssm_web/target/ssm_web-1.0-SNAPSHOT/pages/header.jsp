@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false" %>
-
+<%@taglib prefix="sucurity" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!-- 页面头部 -->
 <header class="main-header">
 	<!-- Logo -->
@@ -22,7 +23,7 @@
 					class="dropdown-toggle" data-toggle="dropdown"> <img
 						src="${pageContext.request.contextPath}/img/user2-160x160.jpg"
 						class="user-image" alt="User Image"> <span class="hidden-xs">
-							xxx
+							<security:authentication property="principal.username"></security:authentication>
 					</span>
 
 				</a>
@@ -38,7 +39,7 @@
 								<a href="#" class="btn btn-default btn-flat">修改密码</a>
 							</div>
 							<div class="pull-right">
-								<a href="${pageContext.request.contextPath}/logout.do"
+								<a href="${pageContext.request.contextPath}/logout"
 									class="btn btn-default btn-flat">注销</a>
 							</div>
 						</li>

@@ -4,11 +4,13 @@ import com.github.pagehelper.PageInfo;
 import com.ssm.pojo.Order;
 import com.ssm.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 /**
@@ -18,6 +20,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/order")
+@Secured("ROLE_ADMIN")
 public class OrderController {
 
     @Autowired
@@ -35,12 +38,21 @@ public class OrderController {
 
 
     @RequestMapping("/findAll")
-    public ModelAndView findAll(@RequestParam int page,@RequestParam int pageSize){
+    public ModelAndView findAll(@RequestParam Integer page,@RequestParam Integer pageSize){
         ModelAndView modelAndView = new ModelAndView();
         List<Order> orderList = orderService.findAll(page,pageSize);
         PageInfo pageInfo = new PageInfo(orderList);
         modelAndView.addObject("pageInfo",pageInfo);
         modelAndView.setViewName("orders-list");
         return modelAndView;
+    }
+
+    @RequestMapping("/findById")
+    public ModelAndView findById(@RequestParam String id){
+        ModelAndView modelAndView = new ModelAndView();
+        Order orders = orderService.findById(id);
+        modelAndView.addObject("orders",orders);
+        modelAndView.setViewName("orders-show");
+        return  modelAndView;
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 /**
@@ -18,13 +19,14 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/product")
+@RolesAllowed({"ADMIN","USER"})
 public class ProductController {
 
      @Autowired
      private IProductService productService;
 
      @RequestMapping("/findAll")
-     public ModelAndView findAll(@RequestParam int page,@RequestParam int pageSize){
+     public ModelAndView findAll(@RequestParam Integer page,@RequestParam Integer pageSize){
           ModelAndView modelAndView = new ModelAndView();
           List<Product> productList = productService.findAll(page,pageSize);
           PageInfo pageInfo  = new PageInfo(productList);

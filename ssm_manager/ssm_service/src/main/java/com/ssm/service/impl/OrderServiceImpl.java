@@ -24,4 +24,9 @@ public class OrderServiceImpl implements IOrderService {
         PageHelper.startPage(page,pageSize);
         return orderDao.findAll();
     }
+
+
+    public Order findById(String id){
+        return  orderDao.findById(id);
+    }
 }
